@@ -3,7 +3,7 @@
 
 # include <stdio.h>
 # include <limits.h>
-//# include <../libft/libft.h>
+# include "../libft/libft.h"
 
 typedef struct  s_stack 
 {
@@ -12,5 +12,7 @@ typedef struct  s_stack
     struct s_stack  *next;
 } t_stack;
 
+char    *get_strategy(char *str);
+double compute_disorder(t_stack *stack_a);
 
 #endif

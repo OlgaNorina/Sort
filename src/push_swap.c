@@ -1,27 +1,23 @@
 #include "push_swap.h"
 
-int	ft_atoi(const char *nptr); //temp
-
 int   main(int argc, char *argv[])
 {
-    int     i;
-    int     num_array[argc - 1];
-    int     temp;
+    int     start_index;
+    char    *strategy;
     t_stack *stack_a;
     t_stack *stack_b;
 
-    i = 0;
-    while (i < argc - 1)
+    if (argc < 2)
+        return (0);
+    start_index = 1;
+    strategy = get_strategy(argv[1]);
+    if (strategy)
     {
-        temp = ft_atoi(argv[i + 1]);
-        num_array[i] = temp;
-        i++;
+        start_index++;
+        if (argc < 3)
+            return (0);
     }
-    i = 0;
-    while (i < argc - 1)
-    {
-        printf("%d ", num_array[i]);
-        i++;
-    }
+    else
+        strategy = "adaptive";
     return (0);
 }
