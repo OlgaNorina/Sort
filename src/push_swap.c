@@ -1,11 +1,11 @@
 #include "push_swap.h"
 
-int   main(int argc, char *argv[])
+int   main(int argc, char **argv)
 {
     int     start_index;
     char    *strategy;
+    double  disorder;
     t_stack *stack_a;
-    t_stack *stack_b;
 
     if (argc < 2)
         return (0);
@@ -19,5 +19,12 @@ int   main(int argc, char *argv[])
     }
     else
         strategy = "adaptive";
+    stack_a = init_stack(argc, argv, start_index);
+    if (!stack_a)
+    {
+        write(2, "Error\n", 6);
+        return (1);
+    }
+    disorder = compute_disorder(stack_a);
     return (0);
 }
