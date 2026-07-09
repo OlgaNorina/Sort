@@ -13,6 +13,8 @@ typedef struct  s_stack
 } t_stack;
 
 char    *get_strategy(char *str);
-double compute_disorder(t_stack *stack_a);
+double  compute_disorder(t_stack *stack_a);
+t_stack *init_stack(int argc, char **argv, int start_index);
+int     ft_isduplicate(char **ar, int  size);
 
 #endif
