@@ -30,7 +30,7 @@ double compute_disorder(t_stack *stack_a)
     while(current != NULL)
     {
         next_node = current->next;
-        while(current != NULL)
+        while(next_node != NULL)
         {
             total_pairs++;
             if (current->value > next_node->value)

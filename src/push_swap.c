@@ -26,5 +26,6 @@ int   main(int argc, char **argv)
         return (1);
     }
     disorder = compute_disorder(stack_a); //рассчитываем метрику неупорядоченности (еще не тестировала)
+    printf("%f\n", disorder);
     return (0);
 }
