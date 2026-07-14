@@ -21,5 +21,7 @@ t_stack *init_stack_node(int new_value);
 void    add_new_node_last(t_stack **stack, t_stack *new_node);
 void    print_stack(t_stack *stack);//Для тестирования
 void    free_array(char **arg);
+void    free_stack(t_stack **stack);
+int     check_and_parse(t_stack **stack, char **arr);
 
 #endif

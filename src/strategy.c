@@ -27,17 +27,17 @@ double compute_disorder(t_stack *stack_a)
     mistakes = 0;
     total_pairs = 0;
     current = stack_a;
-    while(current != NULL)
+    while(current != NULL)//
     {
-        next_node = current->next;
-        while(next_node != NULL)
+        next_node = current->next;//Присвоение next_node: следующей по отношению к текущему для сравнения
+        while(next_node != NULL)//Переход в цикле пока в next не будет NULL
         {
-            total_pairs++;
-            if (current->value > next_node->value)
-                mistakes++;
-            next_node = next_node->next;
+            total_pairs++;//Счетчик количества переходов = количество пар для сравнения
+            if (current->value > next_node->value)//Сравнение текущего и следующего числа
+                mistakes++;//+ счетчик, если предыдущее больше следующего
+            next_node = next_node->next;//Переход к следующему
         }
-        current = current->next;
+        current = current->next;//Следующий элемент принимается как текущий
     }
     return ((double)mistakes / total_pairs);
 }
