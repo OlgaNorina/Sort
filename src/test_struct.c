@@ -6,7 +6,7 @@
 /*   By: olkondak <olkondak@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 12:09:45 by olkondak          #+#    #+#             */
-/*   Updated: 2026/07/10 14:15:17 by olkondak         ###   ########.fr       */
+/*   Updated: 2026/07/16 21:21:58 by olkondak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ typedef struct s_stack {
 	int		index;
 	struct	s_stack	*next;
 }	t_stack;
+
+//this function is in operations.c
+void	sa(t_stack **head);
 
 //Function to create a new "node/item" of type t_stack
 //Single node, not connected/linked to the others
@@ -86,20 +89,23 @@ int main(int argc, char **argv)
 	int		i;	
 
 	i = 1;
-	if (argc == 3)
+	while (i < argc)
 	{
-		while (i < 3)
-		{
-			new_node = create_new_node(ft_atoi(argv[i]));
-			if (new_node != NULL)
-				add_new_node(&head, new_node);
-			else
-				return (1); //to handle malloc issues... 
-			printf("Node [%d] is created\n", i);
-			i++;
-		}	
-		print_nodes(head);
-	}
+		new_node = create_new_node(ft_atoi(argv[i]));
+		if (new_node != NULL)
+			add_new_node(&head, new_node);
+		else
+			return (1); //to handle malloc issues... 
+		printf("Node [%d] is created\n", i);
+		i++;
+	}	
+	print_nodes(head);
+	printf("head address before is %p\n", &head);	
+	printf("head value before is %p\n", head);
+	sa(&head);
+	printf("head value after is %p\n", head);
+	print_nodes(head);
+	
 	if (head != NULL)
 	{
 		printf("Cleaning something...");
