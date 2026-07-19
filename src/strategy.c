@@ -3,6 +3,7 @@
 char    *get_strategy(char *str)
 {
     char    *strategy;
+    double  disorder;
 
     strategy = NULL;
     if (ft_strcmp(str, "--simple") == 0)
@@ -12,7 +13,7 @@ char    *get_strategy(char *str)
     else if (ft_strcmp(str, "--complex") == 0)
             strategy = "complex";
     else if (ft_strcmp(str, "--adaptive") == 0)
-            strategy = "adaptive";
+        strategy = "adaptive";
     return (strategy);
 }
 
@@ -40,4 +41,17 @@ double compute_disorder(t_stack *stack_a)
         current = current->next;//Следующий элемент принимается как текущий
     }
     return ((double)mistakes / total_pairs);
+}
+
+char    *get_strategy_by_disorder(double disorder)
+{
+    char    *strategy;
+
+    if (disorder < 0.2f)
+        strategy = "simple";
+    else if (disorder >= 0.2f && disorder < 0.5f)
+        strategy = "medium";
+    else
+        strategy = "complex";
+    return (strategy);
 }

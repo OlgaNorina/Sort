@@ -23,5 +23,6 @@ void    print_stack(t_stack *stack);//Для тестирования
 void    free_array(char **arg);
 void    free_stack(t_stack **stack);
 int     check_and_parse(t_stack **stack, char **arr);
+char    *get_strategy_by_disorder(double disorder);
 
 #endif

@@ -14,8 +14,13 @@ int	main(int argc, char **argv)
 	if (strategy) // если предыдущий вызов вернул значение, а не ноль, 
 		start_index++; // то необходимо начать со второго индекса, т.к. 1 - флаг. Свигаем индекс.
 	else
-		strategy = "adaptive";// если флаг не передан, принимаем по умолчанию данное значение, 
-                                //которое предполагает, что мы сами решаем, как определять тип сортировки
+		strategy = "adaptive";
+	if (strategy == "adaptive")
+	{
+		disorder = compute_disorder(stack_a); //рассчитываем метрику неупорядоченности (еще не тестировала)
+		strategy = get_strategy_by_disorder(disorder);
+		printf("Disorder = %f\n", disorder);
+	}
 	if ((argc - start_index) == 1 && !ft_strchr(argv[start_index], ' ')) //1 может быть, если после флага/команды только 1 цифра ИЛИ строка в "" , тогда проверяем пробел в строке. Если его нет, значит в ней только одно число, что тоже не подходит
 		return (0);
 	stack_a = init_stack(argc, argv, start_index); //инициализация стэка
@@ -24,7 +29,5 @@ int	main(int argc, char **argv)
 		write(2, "Error\n", 6);
 		return (1);
 	}
-	disorder = compute_disorder(stack_a); //рассчитываем метрику неупорядоченности (еще не тестировала)
-	printf("Disorder = %f\n", disorder);
 	return (0);
 }

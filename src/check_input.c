@@ -66,7 +66,7 @@ t_stack	*init_stack(int argc, char **argv, int start_index)
 	while (index < argc)
 	{
 		chrlst = ft_split(argv[index], ' '); //Массив из одного элемента ЛИБО более если строка ""
-		if (!chrlst)
+		if (!chrlst || chrlst[0] == NULL)
 			return (free_stack(&stack), NULL);//Нужена ли очистка стэка??
 		if (!check_and_parse(&stack, chrlst))
 		{
