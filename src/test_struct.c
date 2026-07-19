@@ -6,7 +6,7 @@
 /*   By: olkondak <olkondak@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 12:09:45 by olkondak          #+#    #+#             */
-/*   Updated: 2026/07/16 21:21:58 by olkondak         ###   ########.fr       */
+/*   Updated: 2026/07/19 21:25:14 by olkondak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct s_stack {
 
 //this function is in operations.c
 void	sa(t_stack **head);
+void	sb(t_stack **head);
+void	ss(t_stack **head_a, t_stack **head_b);
+void	push(t_stack **head_src, t_stack **head_dst);
 
 //Function to create a new "node/item" of type t_stack
 //Single node, not connected/linked to the others
@@ -77,39 +80,61 @@ static void	free_stack(t_stack *head)
 	while (head != NULL)
 	{
 		tmp = head->next;
-		free(head);
+		free(head); //maybe also there is need to not only free, but also clean the data itself
 		head = tmp;
 	}
 }
 
 int main(int argc, char **argv)
 {
-	t_stack	*head = NULL;
+	t_stack	*stack_a = NULL;
+	t_stack	*stack_b = NULL;
 	t_stack	*new_node = NULL;
-	int		i;	
+	int		i;
 
 	i = 1;
 	while (i < argc)
 	{
 		new_node = create_new_node(ft_atoi(argv[i]));
 		if (new_node != NULL)
-			add_new_node(&head, new_node);
+			add_new_node(&stack_a, new_node);
 		else
 			return (1); //to handle malloc issues... 
 		printf("Node [%d] is created\n", i);
 		i++;
-	}	
-	print_nodes(head);
-	printf("head address before is %p\n", &head);	
-	printf("head value before is %p\n", head);
-	sa(&head);
-	printf("head value after is %p\n", head);
-	print_nodes(head);
+	}
+	printf("Printing stack_a:\n");	
+	printf("-----------------\n");
+	print_nodes(stack_a);
+	printf("-----------------\n");
+
+	printf("head value before is %p\n", stack_a);
+
+	//sa(&stack_a);
+	//sb(&stack_b);
+	//ss(&stack_a, &stack_b);
+	push(&stack_a, &stack_b);
+
+	printf("head value after is %p\n", stack_a);
 	
-	if (head != NULL)
+	printf("Printing stack_a:\n");
+	printf("-----------------\n");
+	print_nodes(stack_a);
+	printf("-----------------\n");
+	printf("Printing stack_b:\n");
+	printf("-----------------\n");
+	print_nodes(stack_b);
+	printf("-----------------\n");
+	
+	if (stack_a != NULL)
 	{
-		printf("Cleaning something...");
-		free_stack(head);
+		printf("Cleaning stack_a...");
+		free_stack(stack_a);
 	}	
-	return (0);
+	if (stack_b != NULL)
+	{
+		printf("Cleaning stack_b...");
+		free_stack(stack_b);
+	}
+	return (0);	
 }
