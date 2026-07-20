@@ -6,7 +6,7 @@
 /*   By: olkondak <olkondak@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/16 20:17:42 by olkondak          #+#    #+#             */
-/*   Updated: 2026/07/19 21:26:49 by olkondak         ###   ########.fr       */
+/*   Updated: 2026/07/20 22:01:34 by olkondak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ typedef struct s_stack {
 }	t_stack;
 
 void	swap(t_stack **head);
+void    push(t_stack **head_src, t_stack **head_dst);
+void    rotate(t_stack **head);
+void    reverse_rotate(t_stack **head);
+
 /*static int	count_nodes(t_stack *head)
 {
 	int		count;
@@ -38,9 +42,16 @@ void	swap(t_stack **head);
 	return (count);
 }*/
 
+
+//"Interface" functions:
+////sa, sb, ss
+////pa, pb
+////ra, rb, rr
+////rra, rrb, rrr
+	
 void	sa(t_stack **head)
 {
-	if (!head || !*head)
+	if (!head || !*head || !(*head)->next)
 		return ;
 	swap(head);
 	write(1, "sa\n", 3);
@@ -48,7 +59,7 @@ void	sa(t_stack **head)
 
 void	sb(t_stack **head)
 {
-	if (!head || !*head)
+	if (!head || !*head || !(*head)->next)
 		return ;
 	swap(head);
 	write(1, "sb\n", 3);
@@ -56,12 +67,84 @@ void	sb(t_stack **head)
 
 void	ss(t_stack **head_a, t_stack **head_b)
 {
-	if (!head_a || !head_b || !*head_a || !*head_b)
-		return ;
-	swap(head_a);
-	swap(head_b);
+	if (head_a && *head_a && (*head_a)->next)
+		swap(head_a);
+	if (head_b && *head_b && (*head_b)->next)
+		swap(head_b);
 	write(1, "ss\n", 3);
 }
+
+void	pa(t_stack **head_b, t_stack **head_a)
+{
+	if (!head_b || !*head_b || !head_a)
+		return ;
+	push(head_b, head_a);
+	write(1, "pa\n", 3);
+}
+
+void	pb(t_stack **head_a, t_stack **head_b)
+{
+	if (!head_a || !*head_a || !head_b)
+		return ;
+	push(head_a, head_b);
+	write(1, "pb\n", 3);
+}
+
+void	ra(t_stack **head_a)
+{
+	if (!head_a || !*head_a || !(*head_a)->next)
+		return ;
+	rotate(head_a);
+	write(1, "ra\n", 3);
+}
+
+void	rb(t_stack **head_b)
+{
+	if (!head_b || !*head_b || !(*head_b)->next)
+		return ;
+	rotate(head_b);
+	write(1, "rb\n", 3);
+}
+
+void	rr(t_stack **head_a, t_stack **head_b)
+{
+	if (head_a && *head_a && (*head_a)->next)
+		rotate(head_a);
+	if (head_b && *head_b && (*head_b)->next)
+		rotate(head_b);
+	write(1, "rr\n", 3);
+}
+	
+void	rra(t_stack **head_a)
+{
+	if (!head_a || !*head_a || !(*head_a)->next)
+		return ;
+	reverse_rotate(head_a);
+	write(1, "rra\n", 4);
+}
+
+void	rrb(t_stack **head_b)
+{
+	if (!head_b || !*head_b || (*head_b)->next)
+		return ;
+	reverse_rotate(head_b);
+	write(1, "rrb\n", 4);
+}
+
+void	rrr(t_stack **head_a, t_stack **head_b)
+{
+	if (head_a && *head_a && (*head_a)->next)
+		reverse_rotate(head_a);
+	if (head_b && *head_b && (*head_b)->next)
+		reverse_rotate(head_b);
+	write(1, "rrr\n", 4);
+}
+
+//The "functional" functions themselves:
+////swap
+////push
+////rotate
+////reverse_rotate
 
 void    swap(t_stack **head)
 {
@@ -96,4 +179,49 @@ void	push(t_stack **head_src, t_stack **head_dst)
 	//At this point we do not care what tmp->next was before, therefore we can overwrite it. 
 	tmp->next = *head_dst;
 	*head_dst = tmp;
+}
+
+void	rotate(t_stack **head)
+{
+	t_stack	*first;
+	t_stack	*tmp;
+	
+	if (!head || !*head || !(*head)->next)
+		return ;
+	//Saving the address of the first node
+	first = *head;
+	*head = (*head)->next;
+	//Looping through the nodes to reach the last one
+	tmp = *head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	//When we reached the last node - updating its ->next to point to the node, that used to be first	
+	tmp->next = first;
+	//Now "used to be first node" becomes the last one
+	first->next = NULL;
+}
+
+void	reverse_rotate(t_stack **head)
+{
+	t_stack	*first;
+	t_stack *tmp;
+	t_stack *previous;
+
+	if (!head || !*head || !(*head)->next)
+		return ;
+	//Saving the address of the first node
+	first = *head;
+	tmp = *head;
+	previous = NULL;
+	//Looping through the nodes to reach the last one and the one before (previous)
+	while (tmp->next != NULL)
+	{
+		previous = tmp;
+		tmp = tmp->next;
+	}
+	//Previous node becomes the last one
+	previous->next = NULL;
+	//Head is updated with the address of the last node. ->next points to the one, that used to be first
+	*head = tmp;
+	(*head)->next = first;
 }

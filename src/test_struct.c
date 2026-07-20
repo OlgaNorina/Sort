@@ -6,7 +6,7 @@
 /*   By: olkondak <olkondak@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 12:09:45 by olkondak          #+#    #+#             */
-/*   Updated: 2026/07/19 21:25:14 by olkondak         ###   ########.fr       */
+/*   Updated: 2026/07/20 21:59:40 by olkondak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,14 @@ typedef struct s_stack {
 void	sa(t_stack **head);
 void	sb(t_stack **head);
 void	ss(t_stack **head_a, t_stack **head_b);
-void	push(t_stack **head_src, t_stack **head_dst);
+void	pa(t_stack **head_b, t_stack **head_a);
+void	pb(t_stack **head_a, t_stack **head_b);
+void    ra(t_stack **head_a);
+void	rb(t_stack **head_b);
+void    rr(t_stack **head_a, t_stack **head_b);
+void    rra(t_stack **head_a);
+void	rrb(t_stack **head_b);
+void	rrr(t_stack **head_a, t_stack **head_b);
 
 //Function to create a new "node/item" of type t_stack
 //Single node, not connected/linked to the others
@@ -110,13 +117,14 @@ int main(int argc, char **argv)
 
 	printf("head value before is %p\n", stack_a);
 
+	//To test any of the interface functions:
 	//sa(&stack_a);
 	//sb(&stack_b);
 	//ss(&stack_a, &stack_b);
-	push(&stack_a, &stack_b);
+	//pb(&stack_a, &stack_b);
+	rrr(&stack_a, &stack_b);
 
-	printf("head value after is %p\n", stack_a);
-	
+			
 	printf("Printing stack_a:\n");
 	printf("-----------------\n");
 	print_nodes(stack_a);
